@@ -1,0 +1,1 @@
+{"version":3,"file":"index-DWsst-WR.js","sources":["../../src/client/pages/checkout/index.tsx"],"sourcesContent":["import React from 'react'\r\n\r\nexport default function Checkout() {\r\n    return <div>Checkout</div>\r\n}\r\n"],"names":["Checkout","jsx"],"mappings":"wCAEA,SAAwBA,GAAW,CACxB,OAAAC,EAAA,IAAC,OAAI,SAAQ,UAAA,CAAA,CACxB"}
