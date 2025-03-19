@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Button, Result, Skeleton, Spin, Tag, Tooltip } from 'antd'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-    useGetProductsQuery,
+    useGetActiveProductsQuery,
     useUpdateClickCountMutation,
 } from '@/services/ProductApi'
 import {
@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom'
 
 export default function MainContent() {
     const nav = useNavigate()
-    const { data: products, isLoading, error } = useGetProductsQuery()
+    const { data: products, isLoading, error } = useGetActiveProductsQuery()
     const [updateClickCount] = useUpdateClickCountMutation()
     const [displayedProducts, setDisplayedProducts] = useState<any[]>([])
     const [currentPage, setCurrentPage] = useState(1)

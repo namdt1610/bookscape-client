@@ -4,7 +4,7 @@ import { IProduct } from '@/types/IProduct'
 export const productApi = createApi({
     reducerPath: 'productApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:8888/api', // API backend URL
+        baseUrl: process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000/api', // API backend URL
         credentials: 'include',
         prepareHeaders: (headers) => {
             headers.set('Content-Type', 'application/json')

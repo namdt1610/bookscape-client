@@ -1,36 +1,45 @@
-// components/SearchSection.tsx
 import React, { useState } from 'react'
-import { Input, AutoComplete } from 'antd'
+import { Button, Input } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
-import { debounce } from 'lodash'
+import { motion } from 'framer-motion'
 
-const SearchSection = ({ onSearch }: { onSearch: (value: string) => void }) => {
+interface SearchSectionProps {
+    onSearch: (value: string) => void
+}
+
+const SearchSection: React.FC<SearchSectionProps> = ({ onSearch }) => {
     const [searchValue, setSearchValue] = useState('')
 
-    const handleSearch = debounce((value: string) => {
-        onSearch(value)
-    }, 300)
+    const handleSearch = () => {
+        onSearch(searchValue)
+    }
 
     return (
-        <div className="flex gap-4 items-center relative w-full max-w-2xl">
-            <AutoComplete
-                value={searchValue}
-                onChange={(value) => {
-                    setSearchValue(value)
-                    handleSearch(value)
-                }}
-                onFocus={() => {}}
-                className="w-full"
-                popupMatchSelectWidth={500}
-            >
+        <motion.div 
+            className="w-full"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+        >
+            <div className="flex space-x-2">
                 <Input
+                    className="glass-input text-lg py-2 px-4 flex-grow"
+                    placeholder="Search for books, authors, genres..."
+                    value={searchValue}
+                    onChange={(e) => setSearchValue(e.target.value)}
+                    onPressEnter={handleSearch}
                     size="large"
-                    placeholder="Search for books, authors, or categories..."
-                    prefix={<SearchOutlined className="text-gray-400" />}
-                    className="rounded-full"
+                    suffix={<SearchOutlined className="text-gray-400" />}
                 />
-            </AutoComplete>
-        </div>
+                <Button 
+                    className="glass-button text-white font-medium" 
+                    size="large" 
+                    onClick={handleSearch}
+                >
+                    Search
+                </Button>
+            </div>
+        </motion.div>
     )
 }
 

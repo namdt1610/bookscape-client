@@ -1,11 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { Category } from '@/types/Category' // Định nghĩa kiểu Category
+import { Category } from '../types/Category' // Định nghĩa kiểu Category
 
 export const categoryApi = createApi({
     reducerPath: 'categoryApi',
     baseQuery: fetchBaseQuery({
         baseUrl:
-            process.env.REACT_APP_API_BASE_URL || 'http://localhost:8888/api', // API backend URL
+            process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000/api',
         credentials: 'include',
         prepareHeaders: (headers) => {
             headers.set('Content-Type', 'application/json')

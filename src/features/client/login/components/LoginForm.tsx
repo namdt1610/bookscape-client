@@ -1,106 +1,135 @@
 import React from 'react'
-import { Button, Checkbox, Form, Input, message } from 'antd'
-import { KeyOutlined, UserOutlined } from '@ant-design/icons'
-import { useNavigate } from 'react-router-dom'
-import { useLoginMutation } from '@/services/AuthApi'
-import { getUserFromCookie } from '@/utils/useGetToken'
-import styles from '@/styles/GlassCard.module.scss'
+import { Form, Input, Button, Checkbox, Divider, Alert } from 'antd'
+import {
+    UserOutlined,
+    LockOutlined,
+    GithubOutlined,
+    GoogleOutlined,
+} from '@ant-design/icons'
+import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { useLogin } from '../hooks/useLogin'
 
-type LoginFormProps = {
-    from: string
-}
-
-const LoginForm: React.FC<LoginFormProps> = ({ from }) => {
-    const navigate = useNavigate()
-    const [login, { isLoading, error }] = useLoginMutation()
-    const userId = getUserFromCookie()
-
-    const onFinish = async (values: { email: string; password: string }) => {
-        try {
-            await login({
-                email: values.email,
-                password: values.password,
-            }).unwrap()
-            userId
-            message.success('Login successfully!')
-            navigate(from ?? '/')
-        } catch (err: any) {
-            if ('data' in err) {
-                message.error(err.data?.message || 'Login fail!')
-            } else {
-                message.error('Login fail! Please try again.')
-            }
-            console.error('Login error:', err)
-        }
-    }
-
-    const onFinishFailed = (errorInfo: any) => {
-        message.error('Please fill in all required fields!')
-        console.log('Failed:', errorInfo)
-    }
+const LoginForm: React.FC = () => {
+    const { handleSubmit, isLoading, error } = useLogin()
 
     return (
-        <Form
-            style={{ width: '100%' }}
-            initialValues={{ remember: true }}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-            autoComplete="on"
-            layout="vertical"
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
         >
-            <Form.Item
-                label="Email"
-                name="email"
-                rules={[
-                    { required: true, message: 'Please input your email!' },
-                    {
-                        type: 'email',
-                        message: 'The input is not valid E-mail!',
-                    },
-                ]}
-            >
-                <Input
-                    className={styles.glassInput}
-                    prefix={<UserOutlined />}
-                    size="large"
-                    autoComplete="email"
-                    placeholder="Enter your email"
-                />
-            </Form.Item>
+            <div className="glassmorphism p-8 max-w-md w-full">
+                <h1 className="text-2xl font-bold mb-6 text-center">
+                    Welcome Back
+                </h1>
 
-            <Form.Item
-                label="Password"
-                name="password"
-                rules={[
-                    { required: true, message: 'Please input your password!' },
-                ]}
-            >
-                <Input.Password
-                    className={styles.glassInput}
-                    prefix={<KeyOutlined />}
-                    size="large"
-                    autoComplete="current-password"
-                    placeholder="Enter your password"
-                />
-            </Form.Item>
+                {error && (
+                    <Alert
+                        message={error}
+                        type="error"
+                        showIcon
+                        className="mb-4"
+                    />
+                )}
 
-            <Form.Item name="remember" valuePropName="checked">
-                <Checkbox>Remember me</Checkbox>
-            </Form.Item>
-
-            <Form.Item>
-                <Button
-                    type="primary"
-                    htmlType="submit"
+                <Form
+                    name="login"
+                    initialValues={{ remember: true }}
+                    onFinish={handleSubmit}
                     size="large"
-                    loading={isLoading} // Thêm loading khi đang gọi API
-                    className={styles.glassButton}
-                    style={{ width: '100%' }}
+                    layout="vertical"
                 >
-                    Submit
-                </Button>
-            </Form.Item>
-        </Form>
+                    <Form.Item
+                        name="email"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your email!',
+                            },
+                        ]}
+                    >
+                        <Input
+                            className="glass-input"
+                            prefix={<UserOutlined className="text-gray-400" />}
+                            placeholder="Email"
+                        />
+                    </Form.Item>
+
+                    <Form.Item
+                        name="password"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your password!',
+                            },
+                        ]}
+                    >
+                        <Input.Password
+                            className="glass-input"
+                            prefix={<LockOutlined className="text-gray-400" />}
+                            placeholder="Password"
+                        />
+                    </Form.Item>
+
+                    <Form.Item>
+                        <div className="flex justify-between items-center">
+                            <Form.Item
+                                name="remember"
+                                valuePropName="checked"
+                                noStyle
+                            >
+                                <Checkbox>Remember me</Checkbox>
+                            </Form.Item>
+                            <Link
+                                to="/forgot-password"
+                                className="text-blue-600 hover:text-blue-800"
+                            >
+                                Forgot password?
+                            </Link>
+                        </div>
+                    </Form.Item>
+
+                    <Form.Item>
+                        <Button
+                            type="primary"
+                            htmlType="submit"
+                            loading={isLoading}
+                            className="glass-button w-full"
+                        >
+                            Sign In
+                        </Button>
+                    </Form.Item>
+
+                    <Divider>or</Divider>
+
+                    <div className="flex space-x-4">
+                        <Button
+                            className="glass-card w-1/2 flex items-center justify-center"
+                            icon={<GoogleOutlined />}
+                        >
+                            Google
+                        </Button>
+                        <Button
+                            className="glass-card w-1/2 flex items-center justify-center"
+                            icon={<GithubOutlined />}
+                        >
+                            Github
+                        </Button>
+                    </div>
+
+                    <div className="mt-6 text-center">
+                        Don't have an account?{' '}
+                        <Link
+                            to="/register"
+                            className="text-blue-600 hover:text-blue-800"
+                        >
+                            Register now
+                        </Link>
+                    </div>
+                </Form>
+            </div>
+        </motion.div>
     )
 }
 

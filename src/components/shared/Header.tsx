@@ -17,7 +17,6 @@ import {
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { getUserFromCookie } from '@/utils/useGetToken'
 import { motion, AnimatePresence } from 'framer-motion'
-import * as Sentry from '@sentry/react'
 
 const { Header } = Layout
 

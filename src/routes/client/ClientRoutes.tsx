@@ -3,8 +3,9 @@ import { Route, Routes } from 'react-router-dom'
 
 import OrderStatusPage from '@/pages/client/order/OrderStatusPage'
 import OrderDetailsPage from '@/pages/client/order/OrderDetailsPage'
-const LoginPage = lazy(() => import('@/features/client/login/Login'))
-const RegisterPage = lazy(() => import('@/features/client/register/Register'))
+const LoginPage = lazy(() => import('@/pages/client/auth/Login/LoginPage'))
+const RegisterPage = lazy(() => import('@/pages/client/auth/Register/RegisterPage'))
+import ForgotPasswordPage from '@/pages/client/auth/ForgotPwd/ForgotPwdPage'
 import HomePage from '@/pages/client/home/HomePage' // Load ngay lập tức
 
 const StorePage = lazy(() => import('@/pages/client/store/StorePage'))
@@ -19,7 +20,6 @@ const CartPage = lazy(() => import('@/features/client/cart/Cart'))
 // Import Skeleton Components
 import UserProfileSkeleton from '@/components/client/skeletons/UserProfileSkeleton'
 import CheckoutSkeleton from '@/components/client/skeletons/CheckoutSkeleton'
-import StoreSkeleton from '@/components/client/skeletons/StoreSkeleton'
 import { Spin } from 'antd'
 
 export default function ClientRoutes() {
@@ -41,6 +41,24 @@ export default function ClientRoutes() {
                         }
                     >
                         <LoginPage />
+                    </Suspense>
+                }
+            />
+
+            <Route
+                path="/forgot-password"
+                element={
+                    <Suspense
+                        fallback={
+                            <Spin
+                                spinning
+                                fullscreen
+                                size="large"
+                                percent={'auto'}
+                            />
+                        }
+                    >
+                        <ForgotPasswordPage />
                     </Suspense>
                 }
             />

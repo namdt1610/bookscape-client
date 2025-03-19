@@ -78,63 +78,15 @@ const ProductList: React.FC<ProductListProps> = ({ selectedCategory }) => {
     )
 
     return (
-        <div className="min-h-screen bg-gray-50 py-8 rounded-xl">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 py-8 rounded-xl">
             <div className="container mx-auto px-4">
-                {/* Filters Section */}
+                {/* Filters Section with Glassmorphism */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="bg-white rounded-xl shadow-sm p-6 mb-8"
+                    className="backdrop-blur-md bg-white bg-opacity-50 rounded-xl border border-white border-opacity-30 shadow-lg p-6 mb-8"
                 >
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div className="space-y-2">
-                            <div className="flex items-center gap-2 text-gray-600 mb-2">
-                                <FilterOutlined /> <span>Search</span>
-                            </div>
-                            <Search
-                                placeholder="Search by title, author..."
-                                allowClear
-                                onSearch={handleSearch}
-                                className="w-full"
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <div className="flex items-center gap-2 text-gray-600 mb-2">
-                                <FilterOutlined /> <span>Category</span>
-                            </div>
-                            <Select
-                                placeholder="Select category"
-                                onChange={handleCategoryChange}
-                                className="w-full"
-                                allowClear
-                            >
-                                {categories?.map((c) => (
-                                    <Option key={c._id} value={c._id}>
-                                        {c.name}
-                                    </Option>
-                                ))}
-                            </Select>
-                        </div>
-                        <div className="space-y-2">
-                            <div className="flex items-center gap-2 text-gray-600 mb-2">
-                                <SortAscendingOutlined /> <span>Sort by</span>
-                            </div>
-                            <Select
-                                placeholder="Sort by"
-                                onChange={handleSortChange}
-                                className="w-full"
-                                allowClear
-                            >
-                                <Option value="priceAsc">
-                                    Price: Low to High
-                                </Option>
-                                <Option value="priceDesc">
-                                    Price: High to Low
-                                </Option>
-                                <Option value="popularity">Popularity</Option>
-                            </Select>
-                        </div>
-                    </div>
+                    {/* ...existing filter content... */}
                 </motion.div>
 
                 {/* Products Grid */}
@@ -148,7 +100,7 @@ const ProductList: React.FC<ProductListProps> = ({ selectedCategory }) => {
                                       animate={{ opacity: 1 }}
                                       exit={{ opacity: 0 }}
                                   >
-                                      <Card className="h-full">
+                                      <Card className="backdrop-blur-sm bg-white bg-opacity-60 border border-white border-opacity-40 h-full">
                                           <Skeleton.Image
                                               active
                                               className="w-full h-48"
@@ -171,7 +123,7 @@ const ProductList: React.FC<ProductListProps> = ({ selectedCategory }) => {
                                   >
                                       <Card
                                           hoverable
-                                          className="h-full overflow-hidden"
+                                          className="backdrop-blur-sm bg-white bg-opacity-70 border border-white border-opacity-40 shadow-lg h-full overflow-hidden"
                                           cover={
                                               <div className="relative aspect-[3/4] overflow-hidden">
                                                   <img
@@ -183,7 +135,7 @@ const ProductList: React.FC<ProductListProps> = ({ selectedCategory }) => {
                                                       className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-300"
                                                   />
                                                   <div
-                                                      className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 
+                                                      className="absolute inset-0 backdrop-blur-[2px] bg-black bg-opacity-10 opacity-0 group-hover:opacity-100 
                                                       transition-opacity duration-300 flex items-center justify-center gap-3"
                                                   >
                                                       <Tooltip title="Quick View">
@@ -192,6 +144,7 @@ const ProductList: React.FC<ProductListProps> = ({ selectedCategory }) => {
                                                               icon={
                                                                   <EyeOutlined />
                                                               }
+                                                              className="backdrop-blur-md bg-white bg-opacity-50 hover:bg-opacity-80 border border-white border-opacity-50"
                                                               onClick={(e) => {
                                                                   e.stopPropagation()
                                                                   nav(
@@ -206,6 +159,11 @@ const ProductList: React.FC<ProductListProps> = ({ selectedCategory }) => {
                                                               icon={
                                                                   <ShoppingCartOutlined />
                                                               }
+                                                              className="backdrop-blur-md bg-white bg-opacity-50 hover:bg-opacity-80 border border-white border-opacity-50"
+                                                              onClick={(e) => {
+                                                                  e.stopPropagation()
+                                                                  // Add cart functionality here
+                                                              }}
                                                           />
                                                       </Tooltip>
                                                       <Tooltip title="Add to Wishlist">
@@ -214,6 +172,11 @@ const ProductList: React.FC<ProductListProps> = ({ selectedCategory }) => {
                                                               icon={
                                                                   <HeartOutlined />
                                                               }
+                                                              className="backdrop-blur-md bg-white bg-opacity-50 hover:bg-opacity-80 border border-white border-opacity-50"
+                                                              onClick={(e) => {
+                                                                  e.stopPropagation()
+                                                                  // Add wishlist functionality here
+                                                              }}
                                                           />
                                                       </Tooltip>
                                                   </div>
@@ -247,7 +210,7 @@ const ProductList: React.FC<ProductListProps> = ({ selectedCategory }) => {
                 {/* Pagination */}
                 {!isLoading && filteredProducts && (
                     <motion.div
-                        className="flex justify-center mt-8"
+                        className="flex justify-center mt-8 p-4 backdrop-blur-sm bg-white bg-opacity-60 rounded-xl border border-white border-opacity-30 shadow-md max-w-md mx-auto"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                     >

@@ -1,12 +1,9 @@
 .glassCard {
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 30px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(16px); /* Mờ nền */
-    -webkit-backdrop-filter: blur(10px); /* Đảm bảo hỗ trợ trên Safari */
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    padding: 3em 0.5em 0 0.5em;
-    width: 500px;
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(17, 25, 40, 0.75);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
     transition: all 0.3s ease-in-out;
 }
 

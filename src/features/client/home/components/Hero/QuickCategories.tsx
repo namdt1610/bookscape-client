@@ -1,24 +1,36 @@
 import React from 'react'
+import { Tag } from 'antd'
 import { motion } from 'framer-motion'
+
+const categories = [
+    'Fiction', 'Mystery', 'Romance', 'Sci-Fi', 'History', 'Biography', 'Self-Help', 'Children'
+]
 
 const QuickCategories = () => {
     return (
         <motion.div
-            className="flex gap-4 flex-wrap"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.8 }}
+            transition={{ delay: 0.6 }}
         >
-            {['Fiction', 'Business', 'Self-Help', 'Science'].map((category) => (
-                <motion.button
-                    key={category}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="px-4 py-2 rounded-full bg-white shadow-sm hover:shadow-md transition-all text-gray-600 hover:text-gray-900 border border-gray-200"
-                >
-                    {category}
-                </motion.button>
-            ))}
+            <h3 className="text-sm font-medium mb-2 text-gray-500">Popular Categories</h3>
+            <div className="flex flex-wrap gap-2">
+                {categories.map((category, index) => (
+                    <motion.div
+                        key={category}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.7 + index * 0.05 }}
+                    >
+                        <Tag 
+                            className="glass-card cursor-pointer px-3 py-1.5 text-sm font-medium border-0 hover:bg-opacity-30 transition-all"
+                            color="transparent"
+                        >
+                            {category}
+                        </Tag>
+                    </motion.div>
+                ))}
+            </div>
         </motion.div>
     )
 }

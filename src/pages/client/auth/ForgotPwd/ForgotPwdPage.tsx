@@ -1,11 +1,11 @@
 import React from 'react'
-import Register from '@/features/client/register/Register'
 import AuthLayout from '@/components/client/layouts/AuthLayout'
+import ForgotPwd from '@/features/client/forgotPwd/ForgotPwd'
 
-export default function RegisterPage() {
+export default function ForgotPasswordPage() {
     return (
         <AuthLayout>
-            <Register />
+            <ForgotPwd />
         </AuthLayout>
     )
 }

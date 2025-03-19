@@ -1,7 +1,13 @@
 {
     "compilerOptions": {
+        "jsx": "react",
+        "esModuleInterop": true,
         "outDir": "./dist",
-        "rootDir": "../"
+        "rootDir": "../",
+        "baseUrl": "./",
+        "paths": {
+            "@/*": ["src/*"]
+        }
     },
     "include": ["src/**/*", "../shared"],
     "exclude": ["node_modules"]

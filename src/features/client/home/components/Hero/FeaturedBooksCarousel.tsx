@@ -1,93 +1,67 @@
-import React, { useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
-import { RightOutlined } from '@ant-design/icons'
+import React from 'react'
+import { Carousel } from 'antd'
+import { motion } from 'framer-motion'
 
+// Mock data - replace with actual API calls
 const featuredBooks = [
     {
         id: 1,
-        title: 'Thuật Thao Túng',
-        author: 'James Clear',
-        image: '/img/thuat-thao-tung.webp',
-        color: 'from-blue-500/20',
-        description: 'Tiny Changes, Remarkable Results',
+        title: 'The Silent Patient',
+        author: 'Alex Michaelides',
+        cover: '/images/book1.jpg',
+        description: 'A psychological thriller about a woman who shoots her husband and then stops speaking.'
     },
     {
         id: 2,
-        title: 'Dopamine Nation',
-        author: 'Dr. Anna Lembke',
-        image: '/img/dopamine.webp',
-        color: 'from-purple-500/20',
-        description: 'Finding Balance in the Age of Indulgence',
+        title: 'Where the Crawdads Sing',
+        author: 'Delia Owens',
+        cover: '/images/book2.jpg',
+        description: 'A mystery, a love story, and a courtroom drama set in the South.'
     },
     {
         id: 3,
-        title: 'Beethoven',
-        author: 'John Suchet',
-        image: '/img/beethoven.webp',
-        color: 'from-emerald-500/20',
-        description: 'The Man Revealed',
-    },
+        title: 'Atomic Habits',
+        author: 'James Clear',
+        cover: '/images/book3.jpg',
+        description: 'Tiny changes, remarkable results - transform your life with small habits.'
+    }
 ]
 
 const FeaturedBooksCarousel = () => {
-    const [activeBook, setActiveBook] = useState(0)
-
     return (
-        <div className="relative h-[400px]">
-            <AnimatePresence mode="wait">
-                <motion.div
-                    key={activeBook}
-                    className="absolute inset-0"
-                    initial={{ opacity: 0, x: 100 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -100 }}
-                    transition={{ duration: 0.5 }}
-                >
-                    <div
-                        className={`h-full rounded-2xl bg-gradient-to-br ${featuredBooks[activeBook].color} to-transparent p-8 flex items-center justify-between`}
-                    >
-                        <div className="space-y-4">
-                            <motion.h3 className="text-2xl font-bold text-gray-900">
-                                {featuredBooks[activeBook].title}
-                            </motion.h3>
-                            <motion.p className="text-gray-600">
-                                {featuredBooks[activeBook].description}
-                            </motion.p>
-                            <motion.p className="text-sm text-gray-500">
-                                By {featuredBooks[activeBook].author}
-                            </motion.p>
-                            <motion.button
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                className="px-6 py-2 bg-white rounded-full shadow-md hover:shadow-lg transition-all text-gray-900 flex items-center gap-2"
-                            >
-                                Learn More <RightOutlined />
-                            </motion.button>
+        <div className="h-full">
+            <h3 className="text-xl font-bold mb-4 text-gray-800">Featured This Week</h3>
+            <Carousel autoplay className="h-[320px]">
+                {featuredBooks.map((book) => (
+                    <div key={book.id} className="p-2">
+                        <div className="glass-card p-5 h-[300px] flex items-center">
+                            <div className="w-1/3 pr-4">
+                                <motion.div
+                                    whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                                    className="relative h-[200px] drop-shadow-lg"
+                                >
+                                    <div className="absolute inset-0 rounded-lg bg-cover bg-center"
+                                         style={{ backgroundImage: `url(${book.cover || 'https://via.placeholder.com/150x220'})` }}>
+                                    </div>
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-lg"></div>
+                                </motion.div>
+                            </div>
+                            <div className="w-2/3">
+                                <h4 className="text-xl font-bold mb-2">{book.title}</h4>
+                                <p className="text-gray-600 text-sm mb-3">by {book.author}</p>
+                                <p className="text-gray-700">{book.description}</p>
+                                <motion.button 
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="glass-button text-white px-4 py-2 mt-4 rounded-lg"
+                                >
+                                    View Details
+                                </motion.button>
+                            </div>
                         </div>
-                        <motion.img
-                            src={featuredBooks[activeBook].image}
-                            alt={featuredBooks[activeBook].title}
-                            className="h-[300px] rounded-lg shadow-2xl"
-                        />
                     </div>
-                </motion.div>
-            </AnimatePresence>
-
-            {/* Navigation Dots */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                {featuredBooks.map((_, index) => (
-                    <motion.button
-                        key={index}
-                        className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                            index === activeBook
-                                ? 'w-6 bg-gray-800'
-                                : 'bg-gray-400'
-                        }`}
-                        onClick={() => setActiveBook(index)}
-                        whileHover={{ scale: 1.2 }}
-                    />
                 ))}
-            </div>
+            </Carousel>
         </div>
     )
 }

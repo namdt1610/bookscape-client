@@ -92,7 +92,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onCategoryChange }) => {
     return (
         <div className="space-y-6">
             {/* Search Categories */}
-            <div className="space-y-2">
+            <div className="space-y-2 px-7">
                 <h3 className="text-gray-600 font-medium flex items-center gap-2">
                     <SearchOutlined /> Search Categories
                 </h3>
