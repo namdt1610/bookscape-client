@@ -1,3 +1,5 @@
+import { IUser } from "./IUser"
+
 export interface OrderItems {
     product: string
     image: string
@@ -8,8 +10,8 @@ export interface OrderItems {
 
 export interface Order {
     _id: string
-    user: string
-    orderItems: OrderItems[]
+    user: IUser
+    items: OrderItems[]
     shippingAddress: {
         address: string
         ward: string
