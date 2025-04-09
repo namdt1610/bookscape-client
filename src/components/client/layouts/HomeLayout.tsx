@@ -9,9 +9,9 @@ interface HomeLayoutProps {
 
 export const HomeLayout = ({ children }: HomeLayoutProps) => {
     return (
-        <div className="min-h-screen flex flex-col">
+        <div className="min-h-screen flex flex-col bg-gradient-to-br from-indigo-50 to-purple-50">
             <Header />
-            <main>{children}</main>
+            <main className="mx-12">{children}</main>
             <Footer />
             <BackToTop />
         </div>

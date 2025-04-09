@@ -2,7 +2,7 @@ import { lazy, LazyExoticComponent } from 'react'
 
 //* routes/routesConfig.ts
 
-type UserRole = 'admin' | 'user'
+export type UserRole = 'admin' | 'user'
 
 export interface RouteConfig {
     path: string

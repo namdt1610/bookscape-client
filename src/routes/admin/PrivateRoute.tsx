@@ -1,46 +1,37 @@
-import { Navigate, useLocation } from 'react-router-dom'
-import { getUserFromCookie } from '@/utils/useGetToken'
-import { usePermissions } from '@/hooks/usePermissions'
-import { RouteConfig } from '@/routes/admin/routesConfig'
 import React from 'react'
+import { Navigate, useLocation } from 'react-router-dom'
+import { UserRole } from './routesConfig'
+import useAuth from '@/hooks/useAuth' // You'll need to create this hook
 
 interface PrivateRouteProps {
     children: React.ReactNode
-    permissions?: RouteConfig['permissions']
+    permissions?: {
+        view: UserRole[]
+        edit?: UserRole[]
+        delete?: UserRole[]
+    }
 }
 
-const PrivateRoute: React.FC<PrivateRouteProps> = ({
-    children,
-    permissions,
-}) => {
+const PrivateRoute = ({ children, permissions }: PrivateRouteProps) => {
     const location = useLocation()
-    const userRole = getUserFromCookie()?.role
+    // Get authentication state from your auth context/hook
+    const { isAuthenticated, userRole } = useAuth()
 
-    // If no permissions required, just check if user is logged in
-    if (!permissions) {
-        if (!userRole) {
-            return (
-                <Navigate
-                    to="/admin/login"
-                    state={{ from: location }}
-                    replace
-                />
-            )
-        }
-        return <>{children}</>
+    // If user is not authenticated, redirect to login
+    if (!isAuthenticated) {
+        // Redirect to login page with the return url
+        return (
+            <Navigate to="/admin/login" state={{ from: location.pathname }} replace />
+        )
     }
 
-    // If permissions are required, check both authentication and authorization
-    const { canView } = usePermissions(permissions)
-
-    if (!userRole) {
-        return <Navigate to="/admin/login" state={{ from: location }} replace />
+    // Check if user has required permissions
+    if (permissions && !permissions.view.includes(userRole as UserRole)) {
+        // User is authenticated but doesn't have required permissions
+        return <Navigate to="/admin/unauthorized" replace />
     }
 
-    if (!canView) {
-        return <Navigate to="/admin/403" replace />
-    }
-
+    // User is authenticated and has permission
     return <>{children}</>
 }
 

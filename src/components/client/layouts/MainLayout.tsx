@@ -9,7 +9,7 @@ interface StoreLayoutProps {
 
 const MainLayout: React.FC<StoreLayoutProps> = ({ children }) => {
     return (
-        <div className="min-h-screen flex flex-col">
+        <div className="min-h-screen flex flex-col bg-gradient-to-br from-indigo-50 to-purple-50">
             <Header />
             <main className=" mt-[74px]">{children}</main>
             <Footer />

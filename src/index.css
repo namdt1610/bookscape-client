@@ -5,7 +5,6 @@
 
 @layer base {
     body {
-        background: linear-gradient(120deg, #e7bdbf, #1ac6c347);
         background-attachment: fixed; /* Giữ cố định khi cuộn */
         background-size: cover; /* Phủ toàn bộ màn hình */
     }

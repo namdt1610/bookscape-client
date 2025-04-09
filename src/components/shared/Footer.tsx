@@ -51,9 +51,9 @@ export default function Footer() {
     ]
 
     return (
-        <footer className="bg-gray-50">
+        <footer className='mx-16'>
             {/* Newsletter Section */}
-            <div className="container mx-auto px-4 py-12">
+            <div className="container mx-auto p-4">
                 <div className="max-w-4xl mx-auto text-center">
                     <motion.h3
                         className="text-2xl font-bold text-gray-800 mb-4"

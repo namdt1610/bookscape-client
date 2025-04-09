@@ -33,7 +33,7 @@ const FeaturedBooksCarousel = () => {
             <h3 className="text-xl font-bold mb-4 text-gray-800">Featured This Week</h3>
             <Carousel autoplay className="h-[320px]">
                 {featuredBooks.map((book) => (
-                    <div key={book.id} className="p-2">
+                    <div key={book.id} >
                         <div className="glass-card p-5 h-[300px] flex items-center">
                             <div className="w-1/3 pr-4">
                                 <motion.div

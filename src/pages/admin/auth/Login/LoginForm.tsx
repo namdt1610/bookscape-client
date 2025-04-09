@@ -13,10 +13,14 @@ const LoginForm: React.FC<LoginFormProps> = ({ from }) => {
 
     const onFinish = async (values: { email: string; password: string }) => {
         try {
-            await login({
+            const res = await login({
                 email: values.email,
                 password: values.password,
             }).unwrap()
+
+            localStorage.setItem('token', res.token)
+            localStorage.setItem('user', JSON.stringify(res.user))
+
             message.success('Login successfully!')
             navigate(from ?? '/dashboard') // Điều hướng sau khi đăng nhập thành công
         } catch (err: any) {

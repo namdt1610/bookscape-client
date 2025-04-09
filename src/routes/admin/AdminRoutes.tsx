@@ -1,10 +1,10 @@
 import React, { Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
-import adminRoutes, { authRoutes, RouteConfig } from './routesConfig'
-import LoadingError from '@/components/shared/LoadingError'
 import PrivateRoute from '@/routes/admin/PrivateRoute'
-import AdminLayout from '@/components/admin/layout/AdminLayout'
+import LoadingError from '@/components/shared/LoadingError'
 import AuthLayout from '@/components/admin/layout/AuthLayout'
+import AdminLayout from '@/components/admin/layout/AdminLayout'
+import adminRoutes, { authRoutes, RouteConfig } from './routesConfig'
 
 export default function AdminRoutes() {
     const renderRoute = ({
@@ -64,9 +64,19 @@ export default function AdminRoutes() {
             }
         >
             <Routes>
-                <Route path="/" element={<AdminLayout />}>
+                {/* Admin routes */}
+                <Route
+                    path="/"
+                    element={
+                        <PrivateRoute>
+                            <AdminLayout />
+                        </PrivateRoute>
+                    }
+                >
                     {adminRoutes.children?.map(renderRoute)}
                 </Route>
+
+                {/* Auth routes (Login/Register) */}
                 {authRoutes.map(({ path, element: Element }) => (
                     <Route
                         key={path}
